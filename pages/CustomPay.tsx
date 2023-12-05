@@ -247,7 +247,9 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
                             <div tabIndex={0} className="card compact dropdown-content z-[1] shadow bg-blue-100  rounded-box w-64">
                                 <div className="card-body">
                                 <h2 className="card-title">How much was the loan for</h2> 
-                                <p>Please do not include "$","/", or any letters</p>
+                                <p>
+  Please do not include &quot;$&quot;, &quot;/&quot;, or any letters
+</p>
                                 </div>
                             </div>
                             </div>
@@ -277,7 +279,9 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
                                         <div tabIndex={0} className="card compact dropdown-content z-[1] shadow bg-blue-100  rounded-box w-64">
                                             <div className="card-body">
                                             <h2 className="card-title">How much would you like to pay per cycle?</h2> 
-                                            <p>Please do not include "$","/", or any letters</p>
+                                            <p>
+                                            Please do not include &quot;$&quot;, &quot;/&quot;, or any letters
+                                            </p>
                                             </div>
                                         </div>
                                         </div>
@@ -307,7 +311,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
                                     <div className="card-body">
                                         <h2 className="card-title">Loan Iterest Rate</h2> 
                                         <p>Please provide percentage amount</p>
-                                        <p>DO NOT ADD '%' SIGN</p>
+                                        <p>DO NOT ADD &lsquo;%&lsquo; SIGN</p>
                                     </div>
                                 </div>
                             </div>
