@@ -45,7 +45,7 @@ const handleExport = () => {
 
   // Add headers
   worksheet.addRow(['Loan Amount','Months', 'Interest']);
-  worksheet.addRow([loan,months,rate]);
+  worksheet.addRow([loan,months,rate?.toFixed(2)]);
   worksheet.addRow(['Month', 'Monthly Payment', 'Principal Payment', 'Interest Payment', 'Remaining Balance']);
 
   // Add data

@@ -117,14 +117,14 @@ const AmortizationTable: React.FC = () => {
 
         if(remainingBalance < customPayment){
             let interestPayment = remainingBalance * monthlyInterestRate;
-            let principalPayment = remainingBalance - interestPayment;
+            let principalPayment = remainingBalance
             remainingBalance -= (principalPayment + interestPayment)
             schedule.push({
                 month,
                 monthlyPayment: principalPayment + interestPayment,
                 principal: principalPayment,
                 interest: interestPayment,
-                balance: remainingBalance,
+                balance: 0,
               });
               totalMonthlyPayments += customPayment;
                 totalInterestPaid += interestPayment;

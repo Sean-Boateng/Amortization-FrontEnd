@@ -25,7 +25,7 @@ const handleExport = () => {
   const worksheet = workbook.addWorksheet('Loan Installments');
 
   worksheet.addRow(['Loan Amount','Months', 'Interest']);
-  worksheet.addRow([loan.amount,totalInstallments,rate]);
+  worksheet.addRow([loan.amount,totalInstallments,rate?.toFixed(2)]);
   worksheet.addRow(['Month', 'Monthly Payment', 'Principal Payment', 'Interest Payment', 'Remaining Balance']);
 
   loan.installments.forEach((item, index) => {
