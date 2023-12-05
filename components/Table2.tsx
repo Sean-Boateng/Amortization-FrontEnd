@@ -64,9 +64,14 @@ const handleExport = () => {
     a.click();
   });
 };
+
+const styleWithFonts = {
+    fontFamily: 'Pt Sans, sans-serif',
+    fontWeight: 700,
+  };
  
   return (
-    <div style={{}}  >
+    <div style={styleWithFonts}  >
 
         <div className='rectangle'>
                 <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between',marginBottom:'5px',}}>

@@ -42,8 +42,13 @@ const handleExport = () => {
   });
 };
 
+
+const styleWithFonts = {
+  fontFamily: 'Pt Sans, sans-serif',
+  fontWeight: 700,
+};
   return (
-    <div style={{}}>
+    <div style={styleWithFonts}>
       <div></div>
       
 
