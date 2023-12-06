@@ -23,20 +23,20 @@ body{
   max-width: 50rem;
 }
 
-.artboard.phone-2.artboard-horizontal {
+/* .artboard.phone-2.artboard-horizontal {
   width: 700px;
   height: 275px;
-}
+} */
 
 .underline {
   height: 1px;
-  background-color: #6419E6; /* For browsers that do not support gradients */
+  background-color: #6419E6; 
   background-image: linear-gradient(to right,white,  #6419E6 , white);
 }
 
 .rectangle {
-  display: inline-block; /* Makes the rectangle take the size of its content */
-  padding: 10px; /* Add padding for spacing */
+  display: inline-block; 
+  padding: 10px;
   min-width: 800px;
   background-color: #ffffff;
   box-shadow: 1px 1px 5px rgb(199, 199, 199);
@@ -51,24 +51,9 @@ body{
 
 .page-container {
   height: 400px; 
-  overflow: auto; /* Add a scrollbar when content overflows */
+  overflow: auto; 
 }
 
-.errorContainer{
-  position: fixed;
-  top: 15%;
-  left: 3%;
-  /* transform: translateX(-50%); */
-  /* ///////////////// */
-  border: 2px rgb(255, 83, 83) solid;
-  background-color: transparent;
-  max-width: 350px;
-  /* min-height: 350px;
-  min-height: 70px; */
-  border-radius: 10px 15px 10px ;
-  padding: 10px;
-  color: red;
-}
 
 div.modal-box{
   background-color: #8656da;
@@ -78,4 +63,17 @@ div.modal-box{
   background-color: #8656da;
   border-color: #8656da;
   color:white;
+}
+
+.flex {
+  display: flex;
+}
+
+.form-container {
+  flex: 1; /* This allows the form container to take up the available space */
+
+}
+
+.table-container {
+  flex: 2; /* This allows the table container to take up the available space */
 }

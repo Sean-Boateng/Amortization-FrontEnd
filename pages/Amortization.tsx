@@ -49,16 +49,17 @@ const Amortization = () => {
         <p style={{textAlign:'left', fontFamily: 'Pt Sans, sans-serif', color:'grey'}}> 
         
         Welcome to Amortization Schedule Calculator, your go-to platform for seamless amortization schedule calculations and personalized financial planning.
-        With our intuitive tools, you can effortlessly generate detailed amortization schedules tailored to your specific needs. Our automated calculations 
+        With our intuitive tools, you can effortlessly, generate detailed amortization schedules tailored to your specific needs. Our automated calculations 
         swiftly compute the schedule based on your initial inputs, ensuring accuracy and efficiency in tracking your loan payments over time.
         </p>
 
       
-        <div style={{position: 'fixed', bottom: '140px', left: '38px', zIndex: '999'}}>
+        <div style={{position: 'absolute', bottom: '140px', left: '38px', zIndex: '999'}}>
           {showCustomPay?
           <div>
             <div style={{color:'grey', fontWeight:'20px'}}>
-            Click to generate custom payment<br/> schedule
+            Click to generate automated payment<br/> schedule
+            
             </div>
             <button onClick={handleToggle}  className="btn btn-outline btn-primary" style={{marginTop:'10px'}}>Click</button>
 
@@ -67,7 +68,7 @@ const Amortization = () => {
             :
             <div>
               <div style={{color:'grey', fontWeight:'20px'}}>
-                Click to generate automated payment<br/> schedule
+              Click to generate custom payment<br/> schedule
               </div>
               <button onClick={handleToggle}  className="btn btn-outline btn-primary" style={{marginTop:'10px'}}>Click</button>
             </div>
@@ -84,13 +85,13 @@ const Amortization = () => {
             
             :
            
-            <div style={{marginTop:'40px'}} className="grid grid-flow-row-dense grid-cols-3 grid-rows-3 ...">   
-              <div style={{backgroundColor:''}}>
+            <div style={{marginTop:'40px'}} className="flex">   
+              <div style={{backgroundColor:''}} className="form-container">
                 <InputForm onFormSubmit={handleFormSubmit} onReset={handleReset}/> 
                
               </div>
 
-              <div className="col-span-2"
+              <div className="table-container"
                 style={{marginLeft:'10px', display:'flex', justifyContent:'flex-start'}} >
                 <Table loan={loan} rate={rate}/>
               </div>
