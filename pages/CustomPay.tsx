@@ -213,8 +213,9 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       };
 
   return (
-    <div className="grid grid-flow-row-dense grid-cols-3 grid-rows-3 ...">
+    <div className="flex">
         {submitted && 
+
         <dialog ref={modalRef} className="modal" style={{fontFamily: 'Pt Sans, sans-serif'}}>
         <div className="modal-box ">
           <h3 className="font-bold text-lg ">Oops!</h3>
@@ -227,13 +228,13 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
             </form>
           </div>
         </div>
-      </dialog>}
+        </dialog>}
         
 
 
 
 
-        <div>
+        <div className="form-container" >
             <form onSubmit={handleSubmit}>
                 <div style={styleWithFonts}>
                     <div style={{display:'flex', flexDirection:'column',marginBottom:'10px'}}>
@@ -336,11 +337,11 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         </div>
 
 
-      {amortizationSchedule.length > 0 && (
-        <div>
-            <Table2 schedule={amortizationSchedule} loan={loanAmount}  rate={interestRate}/>
-        </div>
-      )}
+        {amortizationSchedule.length > 0 && (
+            <div className="table-container">
+                <Table2 schedule={amortizationSchedule} loan={loanAmount}  rate={interestRate}/>
+            </div>
+        )}
      
     </div>
   );
