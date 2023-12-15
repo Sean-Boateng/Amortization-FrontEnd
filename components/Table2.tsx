@@ -7,7 +7,6 @@ import ExcelJS from 'exceljs';
 interface Table2Props {
   schedule: any | null
   loan: any | null
-//   months: any | null
   rate: any | null
 
 }
@@ -118,7 +117,7 @@ const styleWithFonts = {
 
 
 
-        <div className="overflow-x-auto page-container" style={{width:'800px'}}>
+        <div className="overflow-x-auto table-container" style={{width:'800px'}}>
             <table className="table table-sticky-header" style={{}}>
                 <thead>
                     <tr>
