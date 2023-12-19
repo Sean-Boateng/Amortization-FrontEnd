@@ -76,21 +76,22 @@ const Amortization = () => {
 
         <div>
           {showCustomPay ? 
-            <div style={{marginTop:'40px'}} className="flex">   
-              <div style={{backgroundColor:''}} className="form-container">
+            <div style={{marginTop:'40px'}} className=" sm:flex sm:space-x-10">   
+              <div className=" sm:w-1/3 ">
                 <CustomPay loan={cLoan} rate={cRate} updateSchedule={cAmortizationSchedule}/> 
-                <div style={{color:'grey', fontWeight:'20px',marginTop:'30px'}}>
-                  Click to generate automated payment<br/> schedule
-                  
+                <div style={{color:'grey', fontWeight:'20px',marginTop:'30px'}} className="text-center sm:text-left">
+                  Click to generate automated payment<br/> schedule 
                 </div>
-                <button onClick={handleToggle}  className="btn btn-outline btn-primary" style={{marginTop:'10px'}}>Click</button>
-
-
-
+                <div className='flex justify-center sm:block '>
+                  <button onClick={handleToggle}  className="btn btn-outline btn-primary" style={{marginTop:'10px', marginBottom:'15px'}}>Click</button>
+                </div>
+                
               </div>
               {customAmortizationSchedule.length>0 &&(
-                <div className="table-container" style={{marginLeft:'10px', display:'flex', justifyContent:'flex-start'}} >
-                  <Table2 loan={customLoan} rate={customRate} schedule={customAmortizationSchedule}/>
+                <div className="sm:w-2/3">
+                  <div className="flex justify-start">
+                    <Table2 loan={customLoan} rate={customRate} schedule={customAmortizationSchedule}/>
+                  </div> 
                 </div>
               
               )}
@@ -107,7 +108,7 @@ const Amortization = () => {
                     Click to generate custom payment<br/> schedule
                   </div>
                   <div className='flex justify-center sm:block '>
-                    <button onClick={handleToggle} className="btn btn-outline btn-primary " style={{marginTop:'10px', marginBottom:'10px'}}>Click</button>
+                    <button onClick={handleToggle} className="btn btn-outline btn-primary " style={{marginTop:'10px', marginBottom:'15px'}}>Click</button>
                   </div>
                 </div>
               </div>

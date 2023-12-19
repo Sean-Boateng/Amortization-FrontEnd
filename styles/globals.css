@@ -28,28 +28,29 @@ body{
   height: 1px;
   background-color: #6419E6; 
   background-image: linear-gradient(to right,white,  #6419E6 , white);
+  margin-top: 1rem;
 }
 
-.rectangle {
+/* .rectangle{
   display: inline-block; 
   padding: 10px;
-  min-width: 800px;
+  width: 100%;
   background-color: #ffffff;
   box-shadow: 1px 1px 5px rgb(199, 199, 199);
   z-index: 20;
   border-radius: 7px 2px 7px 2px;
-}
-.rectangle2 {
+} */
+.rectangle2, rectangle {
   display: inline-block; 
   padding: 10px;
-  min-width: 300px;
+  width: 100%;
   background-color: #ffffff;
   box-shadow: 1px 1px 5px rgb(199, 199, 199);
   z-index: 20;
   border-radius: 7px 2px 7px 2px;
 }
 .card-body{
-  padding:0;
+  padding:1rem;
 }
 .hover-row:hover {
   background-color: #8656da;

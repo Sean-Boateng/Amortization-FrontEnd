@@ -48,10 +48,10 @@ const styleWithFonts = {
   fontWeight: 700,
 };
   return (
-    <div style={styleWithFonts} className="">
+    <div style={styleWithFonts} className="container mx-auto px-1 sm: px-2 lg:px-3">
 
-      <div className='rectangle2 gap-7 sm:rectangle' >
-        <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between',marginBottom:'5px',}}>
+      <div className='rectangle2 gap-1  sm:rectangle ' >
+        <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
           <div>
             <div className="sm:hidden text-left">SUMMARY</div>
             <div className="hidden sm:block text-center">SUMMARY</div>
@@ -72,49 +72,22 @@ const styleWithFonts = {
         </div>
         <div className='underline'></div>
 
-
-
-
-{/* ////////////////////////////////////////////////////////  Original Settings////////////////////////////////////////////////////////////////// */}
-        {/* <div className="card-body" style={{display:'flex', flexDirection:'row',justifyContent:'space-between'}}>
-          <div style={{display:'flex', flexDirection:'column'}}>
+         <div className="card-body flex-col sm:flex-row justify-between">
+            <div style={{ marginTop:'10px'}}>
               <h3  style={{color:'#6419E6', fontSize:'14px'}}>Total Cost</h3>
               <p style={{fontSize:'16px'}}>${String(loan.sum).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
             </div>
-            <div style={{display:'flex', flexDirection:'column'}}>
+            <div style={{display:'flex', flexDirection:'column',marginTop:'10px'}}>
               <h3  style={{color:'#6419E6', fontSize:'14px'}}>Total Interest</h3>
               <p style={{fontSize:'16px'}}>${String(loan.interestSum).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
             </div>
-            <div style={{display:'flex', flexDirection:'column'}}>
+            <div style={{display:'flex', flexDirection:'column',marginTop:'10px'}}>
               <h3  style={{color:'#6419E6', fontSize:'14px'}}>Avg. Monthly Payment</h3>
               <p style={{fontSize:'16px'}}>${(averageMonthlyPayment)}</p>
             </div>
             
             <button
-              className='btn btn-outline btn-primary'
-              onClick={handleExport}
-            >
-              Export to Excel
-            </button>
-            
-          </div> */}
-{/* ////////////////////////////////////////////////////////  Original Settings////////////////////////////////////////////////////////////////// */}
-
-         <div className="card-body">
-          <div style={{display:'flex', flexDirection:'column'}}>
-              <h3  style={{color:'#6419E6', fontSize:'14px'}}>Total Cost</h3>
-              <p style={{fontSize:'16px'}}>${String(loan.sum).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
-            </div>
-            <div style={{display:'flex', flexDirection:'column'}}>
-              <h3  style={{color:'#6419E6', fontSize:'14px'}}>Total Interest</h3>
-              <p style={{fontSize:'16px'}}>${String(loan.interestSum).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
-            </div>
-            <div style={{display:'flex', flexDirection:'column'}}>
-              <h3  style={{color:'#6419E6', fontSize:'14px'}}>Avg. Monthly Payment</h3>
-              <p style={{fontSize:'16px'}}>${(averageMonthlyPayment)}</p>
-            </div>
-            
-            <button
+            style={{marginTop:'10px'}}
               className='btn btn-outline btn-primary'
               onClick={handleExport}
             >
@@ -127,7 +100,7 @@ const styleWithFonts = {
 
 
       <div className="overflow-x-auto table-container">
-        <table className="table-xs sm:table">
+        <table className="table-xs sm:table mt-1">
 
           <thead>
             <tr>
