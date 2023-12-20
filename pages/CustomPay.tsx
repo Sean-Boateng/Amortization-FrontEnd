@@ -4,11 +4,10 @@ import { Solitreo } from 'next/font/google';
 import React, { useEffect, useRef, useState } from 'react';
 
 type CustomPayProps = {
-    updateSchedule: (data: any) => void; // Define the type for updateSchedule prop
-    loan: (data: any) => void; // Define the type for updateSchedule prop
-    rate: (data: any) => void; // Define the type for updateSchedule prop
+    updateSchedule: (data: any) => void; 
+    loan: (data: any) => void; 
+    rate: (data: any) => void; 
   };
-
 
 const CustomPay: React.FC<CustomPayProps> = ( {updateSchedule,loan,rate} ) => {
   const [loanAmount, setLoanAmount] = useState<number | null>(null);
@@ -36,9 +35,6 @@ const CustomPay: React.FC<CustomPayProps> = ( {updateSchedule,loan,rate} ) => {
     let remainingBalance = loanAmount;
     let month = 1;
     
-
-
-
     const schedule: { month: number; monthlyPayment: number; principal: number; interest: number; balance: number }[] = [];
     if (interestRate === 0) {
         let totalMonthlyPayments = 0;
@@ -143,7 +139,6 @@ const CustomPay: React.FC<CustomPayProps> = ( {updateSchedule,loan,rate} ) => {
     setTotalMonths(month)
   }
   
-
 return setAmortizationSchedule(schedule);
 };
 
@@ -247,9 +242,6 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         </dialog>}
         
 
-
-
-
         <div className="form-container" >
             <form onSubmit={handleSubmit}>
                 <div style={styleWithFonts}>
@@ -352,13 +344,6 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
             </form>
         </div>
 
-
-        {/* {amortizationSchedule.length > 0 && (
-            <div className="table-container">
-                <Table2 schedule={amortizationSchedule} loan={loanAmount}  rate={interestRate}/>
-            </div>
-        )} */}
-     
     </div>
   );
 };

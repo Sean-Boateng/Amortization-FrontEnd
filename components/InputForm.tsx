@@ -1,27 +1,97 @@
 import React, { useState,useRef } from 'react';
 
-type OnFormSubmitType = (data: Record<string, string>) => void;
-
-interface InputFormProps {
-  onFormSubmit: OnFormSubmitType;
+type InputPayProps = {
+  list: (data: any) => void; 
+  loan: (data: any) => void; 
+  rate: (data: any) => void; 
   onReset: () => void;
+};
+
+interface AmortizationSchedule {
+  period: number;
+  payment: number;
+  principal: number;
+  interest: number;
+  balance: number;
 }
 
-const InputForm: React.FC<InputFormProps> = ({ onFormSubmit, onReset }) => {
-  const initialFormData = {
-    principal: '',
-    months: '',
-    interestRate: '',
-  };
-
-  const [formData, setFormData] = useState(initialFormData);
+const InputForm: React.FC<InputPayProps> = ({list,loan,rate, onReset }) => {
   const [submitted, setSubmitted] = useState(false);
   const [message, setMessage] = useState('');
+  const [loanAmount, setLoanAmount] = useState<number | null>(null);
+  const [interestRate, setInterestRate] = useState<number | null>(null);
+  const [term, setTerm] = useState<number | null>(null);
+  const [amortizationSchedule, setAmortizationSchedule] = useState<
+    { period: number; payment: number; principal: number; interest: number; balance: number }[]
+  >([]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
-  };
+
+
+  function calculateAmortizationSchedule(
+    loanAmount: number,
+    interestRate: number,
+    loanTermMonths: number
+  ): AmortizationSchedule[] {
+    let monthlyInterestRate=0
+    if(interestRate == 0){
+      monthlyInterestRate = 0.000001 / 100 / 12
+    }
+    else{
+      monthlyInterestRate = interestRate / 100 / 12}
+      const monthlyPayment =
+      (loanAmount * monthlyInterestRate) /
+      (1 - Math.pow(1 + monthlyInterestRate, -loanTermMonths));
+  
+      const schedule: AmortizationSchedule[] = [];
+      let balance = loanAmount;
+  
+      for (let period = 1; period <= loanTermMonths; period++) {
+        if(monthlyInterestRate ==0.0000000000016666667 ){
+          const interest = 0;
+          let principal = monthlyPayment - interest;
+          if (period === loanTermMonths) {
+            principal = balance; 
+            balance = 0; 
+          } else {
+            balance -= principal;
+          }
+
+          schedule.push({
+            period,
+            payment: monthlyPayment,
+            principal,
+            interest,
+            balance,
+          })
+
+        }
+        else{
+          const interest = balance * monthlyInterestRate;
+          let principal = monthlyPayment - interest;
+          if (period === loanTermMonths) {
+            principal = balance; 
+            balance = 0; 
+          } else {
+            balance -= principal;
+          }
+      
+          schedule.push({
+            period,
+            payment: monthlyPayment,
+            principal,
+            interest,
+            balance,
+          });
+        }
+      
+      }
+      console.log(loanAmount,loanTermMonths,interestRate)
+    return schedule;
+  }
+
+
+
+
 
   const modalRef = useRef<HTMLDialogElement>(null); 
 
@@ -34,44 +104,35 @@ const InputForm: React.FC<InputFormProps> = ({ onFormSubmit, onReset }) => {
     setSubmitted(true)
     e.preventDefault();
     setSubmitted(true)
-    if (formData.principal == '') {
+    if (loanAmount == null) {
       e.preventDefault();
       setMessage('Please enter loan amount. Value must be greater than $0');
       openM()
     } 
-    else if (formData.months == '') {
+    else if (term == null) {
       e.preventDefault();
       setMessage('Please enter loan term, in months.');
       openM()
     } 
-    else if (formData.interestRate == '') {
+    else if (interestRate == null) {
       e.preventDefault();
       setMessage('Please enter loan interest rate. Please enter 0 if there is none.');
       openM()
     } 
   
-    else{setSubmitted(false)
-    const principalValue = parseFloat(formData.principal);
-    const monthsValue = parseInt(formData.months);
-    let interestRateValue = parseFloat(formData.interestRate);
-  
-    const originalInterestRate = formData.interestRate;
-  
-    if (isNaN(interestRateValue) || interestRateValue === 0 || formData.interestRate.trim() === '') {
-      interestRateValue = 0.00001; 
-    }
-  
-    onFormSubmit({
-      principal: isNaN(principalValue) ? '' : principalValue.toString(),
-      months: isNaN(monthsValue) ? '' : monthsValue.toString(),
-      interestRate: interestRateValue.toString(),
-      originalInterestRate, 
-    });}
-  };
+    else{
+      setSubmitted(false)
+      let run = calculateAmortizationSchedule(Number(loanAmount),Number(interestRate),Number(term))
+      console.log('run', run)
+      list(run)
+    }};
 
   const handleReset = () => {
     setSubmitted(false)
-    setFormData(initialFormData);
+    setLoanAmount(null)
+    setTerm(null)
+    setInterestRate(null)
+    list([])
     onReset();
   };
 
@@ -88,10 +149,7 @@ const InputForm: React.FC<InputFormProps> = ({ onFormSubmit, onReset }) => {
     fontFamily: 'Pt Sans, sans-serif',
     fontWeight: 700,
   };
-  
-  
-
-
+ 
   return (
     <div>
       {submitted && 
@@ -108,20 +166,7 @@ const InputForm: React.FC<InputFormProps> = ({ onFormSubmit, onReset }) => {
           </div>
         </div>
       </dialog>}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      
       <form onSubmit={handleSubmit}>
         <div style={styleWithFonts}>
           <div style={{display:'flex', flexDirection:'column',marginBottom:'10px'}}>
@@ -148,8 +193,8 @@ const InputForm: React.FC<InputFormProps> = ({ onFormSubmit, onReset }) => {
               name="principal"
               placeholder="$"
               className="input input-ghost max-w-xs focus:ring-0 focus:bg-transparent"
-              value={formData.principal}
-              onChange={handleChange}
+              value={loanAmount === null ? '' : loanAmount}
+              onChange={(e) => setLoanAmount(e.target.value === '' ? null : Number(e.target.value))}
               style={{width:'100%'}}
               step=".01"
 
@@ -182,8 +227,8 @@ const InputForm: React.FC<InputFormProps> = ({ onFormSubmit, onReset }) => {
               name="months"
               placeholder=" 10"
               className="input input-ghost max-w-xs focus:ring-0 focus:bg-transparent"
-              value={formData.months}
-              onChange={handleChange}
+              value={term === null ? '' : term}
+              onChange={(e) => setTerm(e.target.value === '' ? null : Number(e.target.value))}
               style={{width:'100%'}}
               step=".01"
 
@@ -217,8 +262,8 @@ const InputForm: React.FC<InputFormProps> = ({ onFormSubmit, onReset }) => {
               placeholder="0.0"
               className="input input-ghost max-w-xs focus:ring-0 focus:bg-transparent"
               name="interestRate"
-              value={formData.interestRate}
-              onChange={handleChange}
+              value={interestRate === null ? '' : interestRate}
+              onChange={(e) => setInterestRate(e.target.value === '' ? null : Number(e.target.value))}
               style={{ width: '100%' }}
               step=".01"
 

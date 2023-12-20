@@ -7,17 +7,26 @@ import ExcelJS from 'exceljs';
 interface TableProps {
   loan: LoanInstance | null;
   rate: number | null;
+  list: any | null
 }
 
-const Table: React.FC<TableProps> = ({ loan,rate}) => {
+const Table: React.FC<TableProps> = ({list,loan,rate}) => {
 
-  if (!loan) {
+  if (!list) {
     return null;
   }
-  const totalInstallments = loan.installments.length;
+  const sumOfPayments = (list.reduce(
+    (total:any, entry:any) => total + entry.payment,
+    0).toFixed(2)
+  );
+  const sumOfInterest = (list.reduce(
+    (total:any, entry:any) => total + entry.interest,
+    0).toFixed(2)
+  );
+  const totalInstallments = list.length;
   const plural = totalInstallments > 1;
 
-const averageMonthlyPayment = (loan.sum / totalInstallments).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+const averageMonthlyPayment = (sumOfPayments/ totalInstallments).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 const handleExport = () => {
 
@@ -25,11 +34,11 @@ const handleExport = () => {
   const worksheet = workbook.addWorksheet('Loan Installments');
 
   worksheet.addRow(['Loan Amount','Months', 'Interest']);
-  worksheet.addRow([loan.amount,totalInstallments,rate?.toFixed(2)]);
+  worksheet.addRow([loan,totalInstallments,rate?.toFixed(2)]);
   worksheet.addRow(['Month', 'Monthly Payment', 'Principal Payment', 'Interest Payment', 'Remaining Balance']);
 
-  loan.installments.forEach((item, index) => {
-    worksheet.addRow([index + 1, item.capital + item.interest, item.capital, item.interest, item.remain]);
+  list.installments.forEach((item:any, index:any) => {
+    worksheet.addRow([item.period, item.payment, item.principal, item.interest, item.balance]);
   });
 
   workbook.xlsx.writeBuffer().then((buffer) => {
@@ -41,6 +50,14 @@ const handleExport = () => {
     a.click();
   });
 };
+
+const numberWithCommas = (value: number): string => {
+  return value.toLocaleString('en-US');
+};
+
+let sumP = numberWithCommas(sumOfPayments)
+let sumI = numberWithCommas(sumOfInterest)
+
 
 
 const styleWithFonts = {
@@ -75,11 +92,11 @@ const styleWithFonts = {
          <div className="card-body flex-col sm:flex-row justify-between">
             <div style={{ marginTop:'10px'}}>
               <h3  style={{color:'#6419E6', fontSize:'14px'}}>Total Cost</h3>
-              <p style={{fontSize:'16px'}}>${String(loan.sum).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
+              <p style={{fontSize:'16px'}}>${String(sumP).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
             </div>
             <div style={{display:'flex', flexDirection:'column',marginTop:'10px'}}>
               <h3  style={{color:'#6419E6', fontSize:'14px'}}>Total Interest</h3>
-              <p style={{fontSize:'16px'}}>${String(loan.interestSum).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
+              <p style={{fontSize:'16px'}}>${String(sumI).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
             </div>
             <div style={{display:'flex', flexDirection:'column',marginTop:'10px'}}>
               <h3  style={{color:'#6419E6', fontSize:'14px'}}>Avg. Monthly Payment</h3>
@@ -112,14 +129,14 @@ const styleWithFonts = {
             </tr>
           </thead>
           <tbody>
-          {loan.installments.map((item, index) => (
+          {list.map((item:any, index:any) => (
             
             <tr className="hover-row" key={index}>
             <th className="hidden sm:table-cell">{index+1}</th>
-            <td>{(item.capital + item.interest).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-            <td>{item.capital.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+            <td>{(item.payment).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+            <td>{item.principal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
             <td>{item.interest.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-            <td>{item.remain.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+            <td>{item.balance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
           </tr>
             ))}
           </tbody>

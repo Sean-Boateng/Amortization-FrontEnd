@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { LoanInstance } from 'loanjs';
 import { ExcelFile, ExcelSheet, ExcelColumn } from 'react-data-export';
 import ExcelJS from 'exceljs';
@@ -68,6 +68,20 @@ const styleWithFonts = {
     fontFamily: 'Pt Sans, sans-serif',
     fontWeight: 700,
   };
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
  
   return (
     <div style={styleWithFonts} className="container mx-auto px-1 sm: px-2 lg:px-3"  >
