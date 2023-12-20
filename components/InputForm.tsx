@@ -136,8 +136,8 @@ const InputForm: React.FC<InputFormProps> = ({ onFormSubmit, onReset }) => {
                 <div className="card-body">
                   <h2 className="card-title">How much was the loan for</h2> 
                   <p>
-  Please do not include &quot;$&quot;, &quot;/&quot;, or any letters
-</p>
+                    Please do not include &quot;$&quot;, &quot;/&quot;, or any letters
+                  </p>
                 </div>
               </div>
             </div>

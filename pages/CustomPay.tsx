@@ -3,7 +3,14 @@ import Table2 from '@/components/Table2';
 import { Solitreo } from 'next/font/google';
 import React, { useEffect, useRef, useState } from 'react';
 
-const AmortizationTable: React.FC = () => {
+type CustomPayProps = {
+    updateSchedule: (data: any) => void; // Define the type for updateSchedule prop
+    loan: (data: any) => void; // Define the type for updateSchedule prop
+    rate: (data: any) => void; // Define the type for updateSchedule prop
+  };
+
+
+const CustomPay: React.FC<CustomPayProps> = ( {updateSchedule,loan,rate} ) => {
   const [loanAmount, setLoanAmount] = useState<number | null>(null);
   const [interestRate, setInterestRate] = useState<number | null>(null);
   const [customPayment, setCustomPayment] = useState<number | null>(null);
@@ -135,7 +142,7 @@ const AmortizationTable: React.FC = () => {
     }
     setTotalMonths(month)
   }
-    
+  
 
 return setAmortizationSchedule(schedule);
 };
@@ -184,8 +191,14 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
           setInterestRate(0);
         }
         calculateAmortizationSchedule(interestRateValue);
+        updateSchedule(amortizationSchedule)
+        loan(loanAmount)
+        rate(interestRate)
         setSubmitted(false);
       }
+      console.log('rate', rate)
+      console.log('loan', loan)
+      console.log('sch', updateSchedule)
   };
 
   const handleReset = () => {
@@ -194,6 +207,9 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     setInterestRate(null);
     setCustomPayment(null);
     setAmortizationSchedule([]);
+    updateSchedule([])
+    loan(null)
+    rate(null)
   };
   
 
@@ -258,7 +274,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 
                             <input
                             type="number"
-                            placeholder="$0"
+                            placeholder="$"
                             className="input input-ghost max-w-xs focus:ring-0 focus:bg-transparent"
                             value={loanAmount === null ? '' : loanAmount}
                             onChange={(e) => setLoanAmount(e.target.value === '' ? null : Number(e.target.value))}
@@ -337,16 +353,16 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         </div>
 
 
-        {amortizationSchedule.length > 0 && (
+        {/* {amortizationSchedule.length > 0 && (
             <div className="table-container">
                 <Table2 schedule={amortizationSchedule} loan={loanAmount}  rate={interestRate}/>
             </div>
-        )}
+        )} */}
      
     </div>
   );
 };
 
 
-export default AmortizationTable;
+export default CustomPay;
 

@@ -7,7 +7,6 @@ import ExcelJS from 'exceljs';
 interface Table2Props {
   schedule: any | null
   loan: any | null
-//   months: any | null
   rate: any | null
 
 }
@@ -30,7 +29,7 @@ const Table2: React.FC<Table2Props> = ({schedule,loan,rate}) => {
 
   let months = schedule.length
   console.log('Test', months)
-  let avg = Number((totalMonthlyPayments/months).toFixed(2));
+  let averageMonthlyPayment = Number((totalMonthlyPayments/months).toFixed(2));
   let plural = months > 1
   
 
@@ -71,9 +70,57 @@ const styleWithFonts = {
   };
  
   return (
-    <div style={styleWithFonts}  >
+    <div style={styleWithFonts} className="container mx-auto px-1 sm: px-2 lg:px-3"  >
 
-        <div className='rectangle'>
+
+<div className='rectangle2 gap-1  sm:rectangle ' >
+        <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+          <div>
+            <div className="sm:hidden text-left">SUMMARY</div>
+            <div className="hidden sm:block text-center">SUMMARY</div>
+          </div>
+          
+          {plural ? (
+            <div>
+              <div className="sm:hidden text-right"># of Payments: {months}</div>
+              <div className="hidden sm:block text-center"># of Payments: {months}</div>
+            </div>
+          ) : (
+            <div >
+              <div className="sm:hidden text-right"># of Payments: {months}</div>
+              <div className="hidden sm:block text-center">{months} Payment</div>
+            </div>
+          )}
+
+        </div>
+        <div className='underline'></div>
+
+         <div className="card-body flex-col sm:flex-row justify-between">
+            <div style={{ marginTop:'10px'}}>
+              <h3  style={{color:'#6419E6', fontSize:'14px'}}>Total Cost</h3>
+              <p style={{fontSize:'16px'}}>${String(total).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
+            </div>
+            <div style={{display:'flex', flexDirection:'column',marginTop:'10px'}}>
+              <h3  style={{color:'#6419E6', fontSize:'14px'}}>Total Interest</h3>
+              <p style={{fontSize:'16px'}}>${String(totalInt).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
+            </div>
+            <div style={{display:'flex', flexDirection:'column',marginTop:'10px'}}>
+              <h3  style={{color:'#6419E6', fontSize:'14px'}}>Avg. Monthly Payment</h3>
+              <p style={{fontSize:'16px'}}>${(averageMonthlyPayment)}</p>
+            </div>
+            
+            <button
+            style={{marginTop:'10px'}}
+              className='btn btn-outline btn-primary'
+              onClick={handleExport}
+            >
+              Export to Excel
+            </button>
+            
+          </div>
+      </div>
+
+        {/* <div className='rectangle'>
                 <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between',marginBottom:'5px',}}>
                 <div>SUMMARY</div>
                 {plural ? (
@@ -110,7 +157,7 @@ const styleWithFonts = {
                 <div style={{display:'flex', flexDirection:'row', justifyContent:'space-evenly'}}>
 
                 </div>
-            </div>
+            </div> */}
 
 
 
@@ -118,11 +165,11 @@ const styleWithFonts = {
 
 
 
-        <div className="overflow-x-auto page-container" style={{width:'800px'}}>
-            <table className="table table-sticky-header" style={{}}>
+        <div className="overflow-x-auto table-container" >
+            <table className="table-xs sm:table mt-1" >
                 <thead>
                     <tr>
-                    <th style={{textAlign:'left'}}>Month</th>
+                    <th className="hidden sm:table-cell" style={{textAlign:'left'}}>Month</th>
                     <th style={{textAlign:'left'}}>Monthly Payment</th>
                     <th style={{textAlign:'left'}}>Principal Payment</th>
                     <th style={{textAlign:'left'}}>Interest Payment</th>
@@ -132,7 +179,7 @@ const styleWithFonts = {
                 <tbody>
                     {schedule.map((entry:any, index:any) => (
                     <tr  className="hover-row" key={index}>
-                        <td style={{textAlign:'left'}}>{entry.month}</td>
+                        <td className="hidden sm:table-cell" style={{textAlign:'left'}}>{entry.month}</td>
                         <td style={{textAlign:'left'}}>{entry.monthlyPayment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                         <td style={{textAlign:'left'}}>{entry.principal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                         <td style={{textAlign:'left'}}>{entry.interest.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>

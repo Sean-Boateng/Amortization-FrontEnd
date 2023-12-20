@@ -48,37 +48,46 @@ const styleWithFonts = {
   fontWeight: 700,
 };
   return (
-    <div style={styleWithFonts}>
-      <div></div>
-      
+    <div style={styleWithFonts} className="container mx-auto px-1 sm: px-2 lg:px-3">
 
-      <div className='rectangle' >
-        <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between',marginBottom:'5px',}}>
-          <div>SUMMARY</div>
+      <div className='rectangle2 gap-1  sm:rectangle ' >
+        <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+          <div>
+            <div className="sm:hidden text-left">SUMMARY</div>
+            <div className="hidden sm:block text-center">SUMMARY</div>
+          </div>
+          
           {plural ? (
-        <div># of Payments: {totalInstallments} months</div>
-      ) : (
-        <div># of Payments: {totalInstallments} month</div>
-      )}
+            <div>
+              <div className="sm:hidden text-right"># of Payments: {totalInstallments}</div>
+              <div className="hidden sm:block text-center"># of Payments: {totalInstallments}</div>
+            </div>
+          ) : (
+            <div >
+              <div className="sm:hidden text-right"># of Payments: {totalInstallments}</div>
+              <div className="hidden sm:block text-center">{totalInstallments} Payment</div>
+            </div>
+          )}
 
         </div>
         <div className='underline'></div>
 
-        <div className="card-body" style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
-          <div style={{display:'flex', flexDirection:'column'}}>
+         <div className="card-body flex-col sm:flex-row justify-between">
+            <div style={{ marginTop:'10px'}}>
               <h3  style={{color:'#6419E6', fontSize:'14px'}}>Total Cost</h3>
               <p style={{fontSize:'16px'}}>${String(loan.sum).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
             </div>
-            <div style={{display:'flex', flexDirection:'column'}}>
-            <h3  style={{color:'#6419E6', fontSize:'14px'}}>Total Interest</h3>
-            <p style={{fontSize:'16px'}}>${String(loan.interestSum).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
+            <div style={{display:'flex', flexDirection:'column',marginTop:'10px'}}>
+              <h3  style={{color:'#6419E6', fontSize:'14px'}}>Total Interest</h3>
+              <p style={{fontSize:'16px'}}>${String(loan.interestSum).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
             </div>
-            <div style={{display:'flex', flexDirection:'column'}}>
-            <h3  style={{color:'#6419E6', fontSize:'14px'}}>Avg. Monthly Payment</h3>
-            <p style={{fontSize:'16px'}}>${(averageMonthlyPayment)}</p>
+            <div style={{display:'flex', flexDirection:'column',marginTop:'10px'}}>
+              <h3  style={{color:'#6419E6', fontSize:'14px'}}>Avg. Monthly Payment</h3>
+              <p style={{fontSize:'16px'}}>${(averageMonthlyPayment)}</p>
             </div>
             
             <button
+            style={{marginTop:'10px'}}
               className='btn btn-outline btn-primary'
               onClick={handleExport}
             >
@@ -86,37 +95,36 @@ const styleWithFonts = {
             </button>
             
           </div>
-          <div style={{display:'flex', flexDirection:'row', justifyContent:'space-evenly'}}>
-
-        </div>
       </div>
 
-    <div className="overflow-x-auto page-container">
-  <table className="table table-sticky-header">
 
-    <thead>
-      <tr>
-        <th>Month</th>
-        <th>Monthly Payment</th>
-        <th>Principal Payment</th>
-        <th>Interest Payment</th>
-        <th>Remaining Balance</th>
-      </tr>
-    </thead>
-    <tbody>
-    {loan.installments.map((item, index) => (
-      
-      <tr className="hover-row" key={index}>
-      <th>{index+1}</th>
-      <td>{(item.capital + item.interest).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-      <td>{item.capital.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-      <td>{item.interest.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-      <td>{item.remain.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-    </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
+
+      <div className="overflow-x-auto table-container">
+        <table className="table-xs sm:table mt-1">
+
+          <thead>
+            <tr>
+              <th className="hidden sm:table-cell">Month</th>
+              <th>Monthly Payment</th>
+              <th>Principal Payment</th>
+              <th>Interest Payment</th>
+              <th>Remaining Balance</th>
+            </tr>
+          </thead>
+          <tbody>
+          {loan.installments.map((item, index) => (
+            
+            <tr className="hover-row" key={index}>
+            <th className="hidden sm:table-cell">{index+1}</th>
+            <td>{(item.capital + item.interest).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+            <td>{item.capital.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+            <td>{item.interest.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+            <td>{item.remain.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+          </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
     </div>
   );

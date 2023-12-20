@@ -22,6 +22,11 @@ const config: Config = {
   variants: {
     extend: {
       buttons: ['hover', 'focus'],
+      spacing: {
+        // Define your custom width classes here
+        'custom-width1': '18.75rem',
+        'custom-width2': '50rem',
+      },
       // Add variants for your custom button theme here, if needed
     },
   },
