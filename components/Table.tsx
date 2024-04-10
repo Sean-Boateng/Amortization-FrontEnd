@@ -15,6 +15,7 @@ const Table: React.FC<TableProps> = ({list,loan,rate}) => {
   if (!list) {
     return null;
   }
+  console.log(list)  
   const sumOfPayments = (list.reduce(
     (total:any, entry:any) => total + entry.payment,
     0).toFixed(2)
@@ -35,11 +36,16 @@ const handleExport = () => {
 
   worksheet.addRow(['Loan Amount','Months', 'Interest']);
   worksheet.addRow([loan,totalInstallments,rate?.toFixed(2)]);
+  console.log('Here!!!å',loan,totalInstallments,rate?.toFixed(2))
   worksheet.addRow(['Month', 'Monthly Payment', 'Principal Payment', 'Interest Payment', 'Remaining Balance']);
 
-  list.installments.forEach((item:any, index:any) => {
-    worksheet.addRow([item.period, item.payment, item.principal, item.interest, item.balance]);
-  });
+  if (list && Array.isArray(list)) {
+    list.forEach((item:any, index:any) => {
+        worksheet.addRow([item.period, item.payment, item.principal, item.interest, item.balance]);
+    });
+} else {
+    console.log('list.installments is not defined or is not an array');
+}
 
   workbook.xlsx.writeBuffer().then((buffer) => {
     const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });

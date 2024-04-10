@@ -21,11 +21,6 @@ const InputForm: React.FC<InputPayProps> = ({list,loan,rate, onReset }) => {
   const [loanAmount, setLoanAmount] = useState<number | null>(null);
   const [interestRate, setInterestRate] = useState<number | null>(null);
   const [term, setTerm] = useState<number | null>(null);
-  const [amortizationSchedule, setAmortizationSchedule] = useState<
-    { period: number; payment: number; principal: number; interest: number; balance: number }[]
-  >([]);
-
-
 
   function calculateAmortizationSchedule(
     loanAmount: number,
@@ -85,11 +80,8 @@ const InputForm: React.FC<InputPayProps> = ({list,loan,rate, onReset }) => {
         }
       
       }
-      console.log(loanAmount,loanTermMonths,interestRate)
     return schedule;
   }
-
-
 
 
 
@@ -123,8 +115,9 @@ const InputForm: React.FC<InputPayProps> = ({list,loan,rate, onReset }) => {
     else{
       setSubmitted(false)
       let run = calculateAmortizationSchedule(Number(loanAmount),Number(interestRate),Number(term))
-      console.log('run', run)
       list(run)
+      loan(loanAmount)
+      rate(interestRate)
     }};
 
   const handleReset = () => {
