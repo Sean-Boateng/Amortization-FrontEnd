@@ -227,7 +227,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     <div className="flex">
         {submitted && 
 
-        <dialog ref={modalRef} className="modal" style={{fontFamily: 'Pt Sans, sans-serif'}}>
+        <dialog ref={modalRef} className=" modal p-2" style={{fontFamily: 'Pt Sans, sans-serif'}}>
         <div className="modal-box ">
           <h3 className="font-bold text-lg ">Oops!</h3>
           <p className="py-4">{message}</p>

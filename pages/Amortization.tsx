@@ -9,7 +9,6 @@ import CustomPay from './CustomPay';
 import Table2 from '@/components/Table2';
 
 
-
 const Amortization = () => {
   const [loan, setLoan] = useState<LoanInstance | null>(null);
   const [rate, setRate] = useState<number | null>(null);
@@ -25,16 +24,6 @@ const Amortization = () => {
   };
 
 
-  const handleFormSubmit = (formData: Record<any, any>) => {
-    const principal = parseFloat(formData.principal);
-    const months = parseInt(formData.months);
-    const interestRate = parseFloat(formData.interestRate);
-
-    const newLoan = Loan(principal, months, interestRate, 'annuityDue');
-
-    setLoan(newLoan);
-    setRate(interestRate)
-  };
 
   const handleReset = () => {
     setLoan(null);
@@ -58,19 +47,18 @@ const Amortization = () => {
         setCustomRate(rate);
       };
 
+
+
       const regAM = (data:any)=>{
         setRegularAmortizationSchedule(data)
-        console.log('list', regularAmortizationSchedule)
       }
       const regLoan = (loan:any)=>{
         setLoan(loan)
-        console.log('loan',loan)
       }
       const regRate = (rate:any)=>{
         setRate(rate)
-        console.log('rate', rate)
       }
-      
+      console.log('test',regularAmortizationSchedule,loan,rate)
     return (
       <div style={{marginLeft:'40px', marginRight:"40px",fontFamily: 'Pt Sans, sans-serif'}}>
         
@@ -130,7 +118,8 @@ const Amortization = () => {
             
               {regularAmortizationSchedule.length>0&&(
                 <div className="sm:w-2/3">
-                  <div className="flex justify-start">         
+                  <div className="flex justify-start"> 
+                        
                     <Table loan={loan} rate={rate} list={regularAmortizationSchedule}/>
                   </div>
                 </div>
